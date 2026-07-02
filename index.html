@@ -3,91 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Página Incrível</title>
+    <title>Meu Projeto Brasil</title>
     <style>
-        /* Estilos básicos para o layout */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Cores baseadas na bandeira do Brasil */
+        :root {
+            --verde: #009c3b;
+            --amarelo: #ffdf00;
+            --azul: #002776;
+            --branco: #ffffff;
+            --cinza-claro: #f4f4f4;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--cinza-claro);
             color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
-            background-color: #2c3e50;
-            color: white;
+            background-color: var(--verde);
+            color: var(--branco);
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
+            border-bottom: 8px solid var(--amarelo);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         nav {
-            background-color: #34495e;
+            background-color: var(--azul);
             text-align: center;
-            padding: 0.5rem;
+            padding: 0.8rem;
         }
 
         nav a {
-            color: white;
+            color: var(--branco);
             text-decoration: none;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.2rem;
             margin: 0 0.5rem;
-            display: inline-block;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background 0.3s;
         }
 
         nav a:hover {
-            background-color: #1abc9c;
-            border-radius: 4px;
+            background-color: var(--amarelo);
+            color: var(--azul);
         }
 
         .container {
             max-width: 800px;
             margin: 2rem auto;
-            padding: 0 1rem;
-            background-color: white;
             padding: 2rem;
+            background-color: var(--branco);
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            flex: 1; /* Garante que o conteúdo empurre o rodapé para baixo */
+        }
+
+        h2 {
+            color: var(--azul);
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--verde);
+            padding-bottom: 0.5rem;
+        }
+
+        ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
         }
 
         footer {
             text-align: center;
-            padding: 1rem;
-            background-color: #2c3e50;
-            color: white;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            padding: 1.5rem;
+            background-color: var(--verde);
+            color: var(--branco);
+            border-top: 6px solid var(--amarelo);
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Bem-vindo à Minha Página</h1>
-        <p>Criada com HTML e CSS moderno</p>
+        <h1>Ordem e Progresso na Web</h1>
+        <p>Minha página personalizada com as cores do Brasil</p>
     </header>
 
     <nav>
         <a href="#">Início</a>
         <a href="#">Sobre</a>
-        <a href="#">Contato</a>
+        <a href="#">Projetos</a>
     </nav>
 
     <div class="container">
-        <h2>Sobre este projeto</h2>
-        <p>Este é um modelo básico de página estruturada. Você pode usar este código como ponto de partida para construir o seu próprio site.</p>
+        <h2>Bem-vindo ao meu repositório!</h2>
+        <p>Este código foi ajustado para rodar direto no GitHub Pages sem erros de layout ou de posicionamento.</p>
         
-        <h3>O que você pode adicionar aqui:</h3>
         <ul>
-            <li>Imagens e vídeos</li>
-            <li>Formulários de contato</li>
-            <li>Seus próprios textos e links</li>
+            <li><strong>Verde e Amarelo:</strong> Destacando o topo e o rodapé.</li>
+            <li><strong>Azul:</strong> Realçando o menu de navegação e os títulos.</li>
+            <li><strong>Design Responsivo:</strong> Funciona bem no celular e no computador.</li>
         </ul>
     </div>
 
     <footer>
-        <p>&copy; 2026 - Desenvolvido por Mim</p>
+        <p>&copy; 2026 - Desenvolvido no GitHub</p>
     </footer>
 
 </body>
