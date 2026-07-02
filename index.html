@@ -3,131 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Projeto Brasil</title>
-    <style>
-        /* Cores baseadas na bandeira do Brasil */
-        :root {
-            --verde: #009c3b;
-            --amarelo: #ffdf00;
-            --azul: #002776;
-            --branco: #ffffff;
-            --cinza-claro: #f4f4f4;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--cinza-claro);
-            color: #333;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            background-color: var(--verde);
-            color: var(--branco);
-            text-align: center;
-            padding: 3rem 1rem;
-            border-bottom: 8px solid var(--amarelo);
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-        }
-
-        nav {
-            background-color: var(--azul);
-            text-align: center;
-            padding: 0.8rem;
-        }
-
-        nav a {
-            color: var(--branco);
-            text-decoration: none;
-            padding: 0.5rem 1.2rem;
-            margin: 0 0.5rem;
-            font-weight: bold;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        nav a:hover {
-            background-color: var(--amarelo);
-            color: var(--azul);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: var(--branco);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            flex: 1; /* Garante que o conteúdo empurre o rodapé para baixo */
-        }
-
-        h2 {
-            color: var(--azul);
-            margin-bottom: 1rem;
-            border-bottom: 3px solid var(--verde);
-            padding-bottom: 0.5rem;
-        }
-
-        ul {
-            margin-top: 1rem;
-            padding-left: 1.5rem;
-        }
-
-        li {
-            margin-bottom: 0.5rem;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1.5rem;
-            background-color: var(--verde);
-            color: var(--branco);
-            border-top: 6px solid var(--amarelo);
-            font-weight: 500;
-        }
-    </style>
+    <title>BraZil - Twitter + Reddit Hybrid</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Ordem e Progresso na Web</h1>
-        <p>Minha página personalizada com as cores do Brasil</p>
-    </header>
+    <div class="app-layout">
+        <aside class="sidebar-left">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="var(--amarelo)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                <span>BR Social</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="active">🏠 Início</a>
+                <a href="#">🔍 Explorar</a>
+                <a href="#">👥 Comunidades</a>
+                <a href="#">🔔 Notificações <span class="badge">3</span></a>
+                <a href="#">✉️ Mensagens</a>
+                <a href="#">👤 Perfil</a>
+                <a href="#">⚙️ Configurações</a>
+            </nav>
+            <button class="btn-main" id="btnOpenModal">Criar Post</button>
+        </aside>
 
-    <nav>
-        <a href="#">Início</a>
-        <a href="#">Sobre</a>
-        <a href="#">Projetos</a>
-    </nav>
+        <main class="feed-container">
+            <header class="feed-header">
+                <h2>Página Inicial</h2>
+                <div class="feed-tabs">
+                    <button class="tab active">Para você</button>
+                    <button class="tab">Seguindo</button>
+                </div>
+            </header>
 
-    <div class="container">
-        <h2>Bem-vindo ao meu repositório!</h2>
-        <p>Este código foi ajustado para rodar direto no GitHub Pages sem erros de layout ou de posicionamento.</p>
-        
-        <ul>
-            <li><strong>Verde e Amarelo:</strong> Destacando o topo e o rodapé.</li>
-            <li><strong>Azul:</strong> Realçando o menu de navegação e os títulos.</li>
-            <li><strong>Design Responsivo:</strong> Funciona bem no celular e no computador.</li>
-        </ul>
+            <div class="quick-post">
+                <div class="avatar-placeholder"></div>
+                <div class="post-input-area">
+                    <textarea id="quickPostText" placeholder="O que está acontecendo no Brasil? (Max 500 car.)" maxlength="500"></textarea>
+                    <div class="char-counter"><span id="charCount">0</span>/500</div>
+                    <div class="post-actions-bar">
+                        <div class="media-options">
+                            <span>🖼️</span><span>🎥</span><span>📊</span><span>😀</span>
+                        </div>
+                        <button class="btn-submit" id="btnSubmitQuickPost">Postar</button>
+                    </div>
+                </div>
+            </div>
+
+            <section id="timeline">
+                </section>
+        </main>
+
+        <aside class="sidebar-right">
+            <div class="search-box">
+                <input type="text" placeholder="Pesquisar no BR Social...">
+            </div>
+            
+            <div class="widget">
+                <h3>Tendências do Brasil 🇧🇷</h3>
+                <div class="trend-item">
+                    <span>1 · Tecnologia · Bombando</span>
+                    <p>#JavaScriptPuro</p>
+                    <span>12.5k posts</span>
+                </div>
+                <div class="trend-item">
+                    <span>2 · Política · Assunto do Momento</span>
+                    <p>Ordem e Progresso</p>
+                    <span>45.2k posts</span>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3>Comunidades Populares</h3>
+                <div class="community-item">
+                    <div class="comm-info">
+                        <strong>r/dev_brasil</strong>
+                        <span>18.4k membros</span>
+                    </div>
+                    <button class="btn-follow">Entrar</button>
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <footer>
-        <p>&copy; 2026 - Desenvolvido no GitHub</p>
-    </footer>
+    <dialog id="postModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="btnCloseModal">&times;</span>
+            <h2>Nova Publicação</h2>
+            <textarea id="modalPostText" placeholder="Compartilhe com a comunidade..." maxlength="500"></textarea>
+            <button class="btn-main" id="btnSubmitModalPost">Publicar</button>
+        </div>
+    </dialog>
 
+    <div id="toast" class="toast">Ação realizada com sucesso!</div>
+
+    <script src="script.js"></script>
 </body>
 </html>
