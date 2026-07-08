@@ -3,17 +3,17 @@
 let posts = JSON.parse(localStorage.getItem('br_social_posts')) || [
     {
         id: 1,
-        author: "Dev Canarinho",
-        username: "@canarinho_dev",
-        time: "Há 2 horas",
+        author: "Dev Maniznha",
+        username: "@manuzina_dev",
+        time: "Há 21 horas",
         content: "Montando o setup com luzes RGB em verde e amarelo para codar com o espírito brasileiro ativado! 🇧🇷💻",
         karma: 42,
         userVote: null
     },
     {
         id: 2,
-        author: "Cangaço Tech",
-        username: "@cangaco_tech",
+        author: "nana Tech",
+        username: "@cryibabyy_tech",
         time: "Há 4 horas",
         content: "Alguém aí já tentou refazer o backend do Reddit usando JS puro? É um desafio e tanto!",
         karma: 105,
@@ -85,8 +85,8 @@ function createPost(text) {
 
     const newPost = {
         id: Date.now(),
-        author: "Usuário GitHub",
-        username: "@github_user",
+        author: "euzinho",
+        username: "@s/n_user",
         time: "Agora mesmo",
         content: text,
         karma: 1,
