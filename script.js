@@ -63,8 +63,8 @@ function renderPosts() {
                     <p>${post.content}</p>
                 </div>
                 <div class="post-footer-actions">
-                    <button class="action-btn" onclick="showToast('💬 Seção de comentários em desenvolvimento!')">💬 12</button>
-                    <button class="action-btn" onclick="showToast('🔁 Repostado com sucesso!')">🔁 4</button>
+                    <button class="action-btn" onclick="showToast('💬 Seção de comentários em desenvolvimento!')">💬 505M</button>
+                    <button class="action-btn" onclick="showToast('🔁 Repostado com sucesso!')">🔁 900.4K</button>
                     <button class="action-btn" onclick="showToast('❤️ Adicionado aos favoritos!')">⭐</button>
                 </div>
             </div>
@@ -85,7 +85,7 @@ function createPost(text) {
 
     const newPost = {
         id: Date.now(),
-        author: "euzinho",
+        author: "s/n pro ,,>﹏<,,",
         username: "@s/n_user",
         time: "Agora mesmo",
         content: text,
