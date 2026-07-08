@@ -21,7 +21,7 @@ let posts = JSON.parse(localStorage.getItem('br_social_posts')) || [
     }
 ];
 
-// Elementos da DOM
+// Elementos da DOM principal
 const timeline = document.getElementById('timeline');
 const quickPostText = document.getElementById('quickPostText');
 const charCount = document.getElementById('charCount');
@@ -30,20 +30,42 @@ const postModal = document.getElementById('postModal');
 const btnOpenModal = document.getElementById('btnOpenModal');
 const btnCloseModal = document.getElementById('btnCloseModal');
 
+// Elementos adicionais capturados para novas interações
+const modalPostText = document.getElementById('modalPostText');
+const btnSubmitModalPost = document.getElementById('btnSubmitModalPost');
+const searchInput = document.querySelector('.search-box input');
+const feedTabs = document.querySelectorAll('.feed-tabs .tab');
+const btnFollowCommunity = document.querySelector('.btn-follow');
+
+// Variável para armazenar o termo atual digitado na busca
+let currentSearchTerm = '';
+
 // Inicialização
 document.addEventListener("DOMContentLoaded", () => {
     renderPosts();
     setupEventListeners();
 });
 
-// Renderizar Posts na Tela
+// Renderizar Posts na Tela (com suporte a filtro de pesquisa dinâmica)
 function renderPosts() {
     timeline.innerHTML = '';
-    posts.forEach(post => {
+    
+    // Filtra os posts caso haja um termo na barra de buscas
+    const filteredPosts = posts.filter(post => 
+        post.content.toLowerCase().includes(currentSearchTerm.toLowerCase()) ||
+        post.author.toLowerCase().includes(currentSearchTerm.toLowerCase()) ||
+        post.username.toLowerCase().includes(currentSearchTerm.toLowerCase())
+    );
+
+    if (filteredPosts.length === 0) {
+        timeline.innerHTML = `<p style="padding: 2rem; text-align: center; color: var(--cinza);">Nenhum post encontrado para esta busca. 😢</p>`;
+        return;
+    }
+
+    filteredPosts.forEach(post => {
         const postElement = document.createElement('article');
         postElement.className = 'post-card';
         
-        // Estado visual dos botões de voto
         const upActive = post.userVote === 'up' ? 'upactive' : '';
         const downActive = post.userVote === 'down' ? 'downactive' : '';
 
@@ -75,13 +97,15 @@ function renderPosts() {
 
 // Manipulação do Contador de Caracteres do Post Rápido
 quickPostText.addEventListener('input', (e) => {
-    const target = e.target;
-    charCount.textContent = target.value.length;
+    charCount.textContent = e.target.value.length;
 });
 
-// Criar Novo Post
+// Criar Novo Post (Funciona tanto para a Home quanto para o Modal)
 function createPost(text) {
-    if (text.trim() === "") return;
+    if (text.trim() === "") {
+        showToast("⚠️ O texto da publicação não pode estar vazio!");
+        return;
+    }
 
     const newPost = {
         id: Date.now(),
@@ -93,7 +117,7 @@ function createPost(text) {
         userVote: null
     };
 
-    posts.unshift(newPost); // Adiciona no início do array
+    posts.unshift(newPost);
     saveToStorage();
     renderPosts();
     showToast("🎉 Post publicado no feed!");
@@ -105,13 +129,10 @@ function handleVote(postId, direction) {
     if (!post) return;
 
     if (post.userVote === direction) {
-        // Se clicar de novo no que já votou, cancela o voto
         post.karma += (direction === 'up') ? -1 : 1;
         post.userVote = null;
     } else {
-        // Se mudou o voto ou está votando pela primeira vez
         if (post.userVote) {
-            // Reverte o voto anterior primeiro
             post.karma += (post.userVote === 'up') ? -1 : 1;
         }
         post.karma += (direction === 'up') ? 1 : -1;
@@ -122,7 +143,7 @@ function handleVote(postId, direction) {
     renderPosts();
 }
 
-// Auxiliares
+// Auxiliares de Armazenamento e Interface
 function saveToStorage() {
     localStorage.setItem('br_social_posts', JSON.stringify(posts));
 }
@@ -136,20 +157,62 @@ function showToast(message) {
     }, 3000);
 }
 
-// Configuração de Eventos e Modais
+// Configuração Geral de Escutas de Eventos (Event Listeners)
 function setupEventListeners() {
+    // Enviar Post Rápido da Timeline
     btnSubmitQuickPost.addEventListener('click', () => {
         createPost(quickPostText.value);
         quickPostText.value = '';
         charCount.textContent = 0;
     });
 
-    // Modal Control
+    // Enviar Post a partir da Caixa do Modal Flutuante
+    btnSubmitModalPost.addEventListener('click', () => {
+        createPost(modalPostText.value);
+        modalPostText.value = ''; 
+        postModal.close();       
+    });
+
+    // Controle de Abertura e Fechamento do Modal <dialog>
     btnOpenModal.addEventListener('click', () => postModal.showModal());
     btnCloseModal.addEventListener('click', () => postModal.close());
     
-    // Fechar ao clicar fora do Modal
     postModal.addEventListener('click', (e) => {
         if (e.target === postModal) postModal.close();
     });
+
+    // Funcionalidade: Filtro na Barra de Pesquisa em Tempo Real
+    searchInput.addEventListener('input', (e) => {
+        currentSearchTerm = e.target.value;
+        renderPosts();
+    });
+
+    // Funcionalidade: Alternar Abas Visuais da Timeline (Para você / Seguindo)
+    feedTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            feedTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            showToast(`Alternado para a aba: ${tab.textContent}`);
+            renderPosts();
+        });
+    });
+
+    // Funcionalidade: Botão "Entrar" e "Sair" na Widget de Comunidades
+    if (btnFollowCommunity) {
+        btnFollowCommunity.addEventListener('click', () => {
+            if (btnFollowCommunity.textContent === 'Entrar') {
+                btnFollowCommunity.textContent = 'Sair';
+                btnFollowCommunity.style.backgroundColor = 'transparent';
+                btnFollowCommunity.style.border = '1px solid var(--verde)';
+                btnFollowCommunity.style.color = 'var(--verde)';
+                showToast('👥 Você entrou na comunidade!');
+            } else {
+                btnFollowCommunity.textContent = 'Entrar';
+                btnFollowCommunity.style.backgroundColor = ''; 
+                btnFollowCommunity.style.color = '';
+                btnFollowCommunity.style.border = '';
+                showToast('🚪 Você saiu da comunidade.');
+            }
+        });
+    }
 }
